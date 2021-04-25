@@ -42,14 +42,10 @@ WHOのレポートを読むことでSARS-CoV-2についての理解を深める�
 * SARS-CoVと同様、Wuhan-Hu-1にも、M遺伝子とN遺伝子の間に予測されるORF8遺伝子(長さ366nt)が存在する。
 * 最後に、Wuhan-Hu-1の5'および3'末端配列もベータコロナウイルスの典型的なものであり、それぞれ265ntと229ntの長さである。
 
-<figure style="text-align:center;">
-  <img src="https://user-images.githubusercontent.com/50240567/115989244-6f237800-a5f8-11eb-8bed-e2adea6ce73b.png" width=70%>
-  <figcaption>SARS-CoV-2 NCBI Nucleotide</figcaption>
-</figure>
-
-{: align="center"}
-![my image](https://user-images.githubusercontent.com/50240567/115989244-6f237800-a5f8-11eb-8bed-e2adea6ce73b.png)
-画像タイトル
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/50240567/115989244-6f237800-a5f8-11eb-8bed-e2adea6ce73b.png" width=70%/>
+  <p align="center">SARS-CoV-2 NCBI Nucleotide</p>
+</p>
 
 ### 進化速度
 * SARAS-CoV-2の進化速度の予備的な推定は、平均1x10^-3 site/year程度であり、これは他のRNAウイルスで観察される進化速度の平均に近い
