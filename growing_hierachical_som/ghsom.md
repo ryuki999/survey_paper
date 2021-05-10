@@ -34,9 +34,53 @@ SOMは高次元データを2次元空間に写像することで、マップ上�
 ## GHSOM
 ![image](https://user-images.githubusercontent.com/50240567/117566030-51253f80-b0ef-11eb-9495-d8f9fa45e5c9.png)
 
-
 ### 初期設定と全体のネットワーク制御
+あるユニットiの平均量子化誤差は、ユニットの参照ベクトルm_iと、n_C個の入力ベクトル集合C_iの要素であるx_jを用いて、以下のように表せる。
+
+<img src=
+"https://render.githubusercontent.com/render/math?math=%5Cdisplaystyle+mqe_i%3D%5Cfrac%7B1%7D%7Bn_C%7D+%5Ccdot+%5Csum_%7Bx_j+%5Cin+C_i%7D%7C%7Cm_i-x_j%7C%7C%2C+n_C%3D%7CC_i%7C%2CC_i+%5Cneq+%5Cphi" 
+alt="mqe_i=\frac{1}{n_C} \cdot \sum_{x_j \in C_i}||m_i-x_j||, n_C=|C_i|,C_i \neq \phi">
+
+GHSOMは訓練の最初に、第0層のユニットの平均量子化誤差mqe_0を以下のように計算する。ここで、n_Iは入力データ集合Iのデータ数である。
+
+<img src=
+"https://render.githubusercontent.com/render/math?math=%5Cdisplaystyle+mqe_0%3D%5Cfrac%7B1%7D%7Bn_I%7D+%5Ccdot+%5Csum_%7Bx_i+%5Cin+I%7D%7C%7Cm_0-x_i%7C%7C%2C+n_I%3D%7CI%7C" 
+alt="mqe_0=\frac{1}{n_I} \cdot \sum_{x_i \in I}||m_0-x_i||, n_I=|I|">
+
+上記の平均量子化誤差はモデルの階層化やマップの成長に際に使用する。階層化の際にはすべてのユニットで以下の式を満たすように訓練される。
+
+<img src=
+"https://render.githubusercontent.com/render/math?math=%5Cdisplaystyle+mqe_i+%3C+%5Ctau_2+%5Ccdot+mqe_0" 
+alt="mqe_i < \tau_2 \cdot mqe_0">
+
+また、上記式の代わりに、以下の量子化誤差が使われる場合もある。
+
+<img src=
+"https://render.githubusercontent.com/render/math?math=%5Cdisplaystyle+qe_i+%3D+%5Csum_%7Bx_j+%5Cin+C_i%7D+%7C%7Cm_i-x_j%7C%7C" 
+alt="qe_i = \sum_{x_j \in C_i} ||m_i-x_j||">
+
+<img src=
+"https://render.githubusercontent.com/render/math?math=%5Cdisplaystyle+qe_i+%3C+%5Ctau_2+%5Ccdot+qe_0" 
+alt="qe_i < \tau_2 \cdot qe_0">
+
+GHSOMは第0層のマップの下に初期サイズ2x2のGSOMを設定し、ランダムな参照ベクトルとすることで初期化される。
+
 ### 成長中のSOMの学習・成長過程
+* 全てのマップ中のユニットに対して、qeを求める
+* あるマップ中で最もqeの大きいユニットeと、その近傍で、eとの参照ベクトルの誤差が一番大きいユニットを探索する
+
+<img src=
+"https://render.githubusercontent.com/render/math?math=%5Cdisplaystyle+e+%3D+%5Cargmax_%7Bi%7D+%28%5Csum_%7Bx_j+%5Cin+C_i%7D+%7C%7Cm_i+-+x_j%7C%7C%29%2C+n_C%3D%7CC_i%7C%2C+C_i+%5Cneq+%5Cphi" 
+alt="e = \argmax_{i} (\sum_{x_j \in C_i} ||m_i - x_j||), n_C=|C_i|, C_i \neq \phi">
+
+<img src=
+"https://render.githubusercontent.com/render/math?math=%5Cdisplaystyle+d+%3D+%5Cargmax_%7Bi%7D+%28%7C%7Cm_e+-+m_i%7C%7C%29%2C+m_i+%5Cin+N_e%0A" 
+alt="d = \argmax_{i} (||m_e - m_i||), m_i \in N_e
+">
+
+* eとdの間にユニットを挿入する。尚、挿入ユニットの初期値は、挟み込んでいる近傍ユニットの平均値である。
+* 
+
 ### 成長過程の終了
 ### 全体のマップ適応による階層的な成長
 ### GHSOMの特徴の分析
